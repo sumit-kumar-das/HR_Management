@@ -1,0 +1,50 @@
+<div class="page-signin">
+    <span us-spinner="{radius:15, width:5, length: 10}" spinner-on="showSpinner"></span>
+    <form class="form-horizontal" name="activateAccountForm">
+        <div class="signin-header">
+            <section class="logo text-center">
+                <h1><a href="#/">{{main.brand}}</a></h1>
+            </section>
+        </div>
+        <div class="signin-body">
+            <div class="container">
+                <div class="form-container">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="input-group input-group-first">
+                                <span class="input-group-addon">
+                                    <span class="ti-email"></span>
+                                </span>
+                                <input type="text" name="username" required=""
+                                    class="form-control input-lg"
+                                    placeholder="Username"
+                                    ng-model="account.username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <span class="ti-lock"></span>
+                                </span>
+                                <input type="password" name="password" required=""
+                                    class="form-control input-lg"
+                                    placeholder="One Time Password"
+                                    ng-model="account.password">
+                            </div>
+                        </div>
+                        <div class="divider divider-lg"></div>
+                        <div class="form-group">
+                            <button  ng-click="Activate(activateAccountForm.$valid)" class="btn btn-primary btn-lg btn-block text-center">Activate</button>
+                        </div>
+                    </fieldset>
+                    <div class="divider"></div>
+<!--                    <section class="additional-info">
+                        <p class="text-right">
+                            <a ui-sref="forgot-password">Forgot your password?</a>
+                        </p>
+                    </section>               -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

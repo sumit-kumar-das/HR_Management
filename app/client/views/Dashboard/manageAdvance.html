@@ -1,0 +1,331 @@
+<div>    
+    <span us-spinner="{radius:15, width:5, length: 10}" spinner-on="showSpinner"></span>
+    <div class="page page-grid">
+        <div class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>{{pageTitle}}</strong>  
+            </div>
+            <div class="panel-body">
+            <br/>
+                <div class="panel-body">
+                    <div class="panel-heading">
+                        <strong class="icon_color">
+                            <span class="glyphicon glyphicon-th">
+                            </span> 
+                            Parameters
+                        </strong> 
+                        <span class="pull-right">
+                            <a ui-sref="dashboard" class="headerlink icon_color" style="cursor: pointer">
+                                <span class="glyphicon glyphicon-arrow-left"></span> 
+                                 <span data-i18n="Back To Dashboard"></span> 
+                            </a>
+                        </span>
+                    </div>
+                    <div class="">
+                        <form name="dashboardForm">
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-6">  
+                                    <div class="form-group">
+                                        <label  class="col-md-4 control-label">Start Date</label>
+                                        <div class="col-md-8">
+                                            <div class="control-group input-append " >
+                                            <input type="text"
+                                           ng-model="advanced.startDate"
+                                           placement="bottom"
+                                           class="form-control input-sm"
+                                           data-date-format="M-d-yyyy" 
+                                            data-date-type="number" 
+                                           name="startDate" 
+                                           data-max-date="{{advanced.endDate}}" 
+                                           placeholder="Enter start date"
+                                           ng-change="validateDate(advanced.startDate,advanced.endDate)"
+                                           ng-readonly="readStatus"
+                                           bs-datepicker>
+                                            </div>
+<!--                                            <div class="input-group ui-datepicker " >
+                                                <input tabindex="1" type="text" 
+                                                    class="form-control input-sm"
+                                                    datepicker-popup="{{format}}"
+                                                    ng-model="advanced.startDate"
+                                                    is-open="openedsd"
+                                                    max-date="today"
+                                                    datepicker-options="dateOptions" 
+                                                    close-text="Close"
+                                                    name="startDate"
+                                                    placeholder="mm/dd/yyyy"
+                                                    ng-readonly="readStatus" required="">
+                                                <span class="input-group-addon" ng-click="opensd($event)"><i class="ti-calendar"> </i> </span>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-6">  
+                                    <div class="form-group">
+                                        <label  class="col-md-4 control-label">End Date</label>
+                                        <div class="col-md-8">
+                                            <div class="control-group input-append " >
+                                            <input type="text"
+                                           ng-model="advanced.endDate"
+                                           placement="bottom"
+                                           class="form-control input-sm"
+                                           data-date-format="M-d-yyyy" 
+                                            data-date-type="number" 
+                                           name="endDate" 
+                                           data-min-date="{{advanced.startDate}}"
+                                           placeholder="Enter end date"
+                                           ng-change="validateDate(advanced.startDate,advanced.endDate)"
+                                           ng-readonly="readStatus"
+                                           bs-datepicker>
+                                            </div>
+<!--                                            <div class="input-group ui-datepicker " >
+                                                <input tabindex="2" type="text" 
+                                                    class="form-control input-sm"
+                                                    datepicker-popup="{{format}}"
+                                                    ng-model="advanced.endDate"
+                                                    is-open="openeded"
+                                                    max-date="today"
+                                                    datepicker-options="dateOptions" 
+                                                    close-text="Close"
+                                                    name="endDate"
+                                                    placeholder="mm/dd/yyyy"
+                                                    ng-readonly="readStatus" required="">
+                                                <span class="input-group-addon" ng-click="opened($event)"><i class="ti-calendar"> </i> </span>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+<!--                                    <div class="form-group">
+                                        <label  class="col-md-4 control-label">Technologist</label>
+                                        <div class="col-md-8">
+                                            <input tabindex="3" type="text" class="form-control input-sm" name="technologist"  placeholder="Enter technologist" ng-readonly="readStatus" ng-model="advanced.technologist">
+                                        </div>
+                                    </div>-->
+                                    <div class="form-group" ng-if="selectBoxChoice == 1">
+                                        <label  class="col-md-4 control-label">Facility</label>
+                                        <div class="dropdown col-md-8">                                     
+                                            <select class="form-control input-sm" ng-model="select.facilityId" name="facility" ng-disabled="readStatus || disableFacility" ng-options="value.facilityId as value.facilityName for value in facilityList| orderBy:'facilityName'" tabindex="9">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                            <p class="help-block" ng-show="patientForm.facility.$error.required && patientForm.facility.$dirty" >Facility {{message.REQUIRED}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="selectBoxChoice == 2 || selectBoxChoice == 3 || selectBoxChoice == 4 || selectBoxChoice == 5">
+                                        <label  class="col-md-4 control-label">Technologist</label>
+                                        <div class="dropdown col-md-8">                                     
+                                            <select class="form-control input-sm" ng-model="select.technologistId" name="facility" ng-disabled="readStatus || disableFacility" ng-options="value.technologistId as value.firstName + ' ' + value.lastName for value in technologistList| orderBy:'facilityName'" tabindex="9">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                            <p class="help-block" ng-show="patientForm.facility.$error.required && patientForm.facility.$dirty" >Facility {{message.REQUIRED}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <div class="form-group" ng-if="selectBoxChoice == 2 || selectBoxChoice == 4 || selectBoxChoice == 5">
+                                        <label  class="col-md-4 control-label">Modality</label>
+                                        <div class="dropdown col-md-8">                                     
+                                            <select class="form-control input-sm" ng-model="select.modalityId" name="facility" ng-disabled="readStatus || disableFacility" ng-options="value.modalityId as value.modalityName for value in modalities| orderBy:'facilityName'" tabindex="9">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                            <p class="help-block" ng-show="patientForm.facility.$error.required && patientForm.facility.$dirty" >Facility {{message.REQUIRED}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button ng-disabled="dashboardForm.$invalid"  class="btn btn-w-md btn-gap-v btn-round btn-success" ng-click="getData();"><span class="glyphicon glyphicon-ok"></span> &nbsp; Search </button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="panel-body topmargin">
+                    <div class="panel-heading">
+                        <strong class="icon_color">
+                            <span class="glyphicon glyphicon-th">
+                            </span> 
+                            Result
+                        </strong> 
+                    </div>
+                    <div class="">
+                        <div class="form-horizontal">
+                            <div class="table-responsive topmargin">
+<!--                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="auto-column-width" data-ng-click="order(ascendingOrder ? 'facilityNpi' : '-facilityNpi')" style="cursor: pointer">
+                                                <div class="th">
+                                                    Column1
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'facilityNpi'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-facilityNpi'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="auto-column-width" data-ng-click="order(ascendingOrder ? 'serviceLandLine1' : '-serviceLandLine1')" style="cursor: pointer">
+                                                <div class="th">
+                                                    Column2
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'serviceLandLine1'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-serviceLandLine1'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="auto-column-width" data-ng-click="order(ascendingOrder ? 'serviceEmailId' : '-serviceEmailId')" style="cursor: pointer">
+                                                <div class="th">
+                                                    Column3
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'serviceEmailId'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-serviceEmailId'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="col-md-1">   
+                                                <div class="th">
+                                                    Action
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>-->
+                                <table ng-if="selectBoxChoice === 1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="auto-column-width" style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Facility Name 
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'facilityName'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-facilityName'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="auto-column-width"  style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Region 
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'region'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-region'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="auto-column-width" style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    No. of Orders
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'orders'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-orders'"></span>
+                                                </div>
+                                            </th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="facility in filteredFacility">
+                                        <td class="text-center">{{facility.facilityName}}</td>
+                                        <td class="text-center">{{facility.dispatchRegionName}}</td>
+                                        <td class="text-center">{{facility.noofOrders}}</td>
+                                    </tr>
+                                </table>
+                                <table ng-if="selectBoxChoice === 2" class="table table-bordered table-striped"> 
+                                    <thead>
+                                        <tr>
+                                            <th class="auto-column-width"  style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Technologist Name
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'avgtime_name'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-avgtime_name'"></span>
+                                                </div>
+                                            </th>
+                                            <th class="auto-column-width" style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Average Time (in minutes)
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'avgtime_time'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-avgtime_time'"></span>
+                                                </div>
+                                            </th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="averageTime in filteredAverageTime">
+                                        <td class="text-center">{{averageTime.technologistName}}</td>
+                                        <td class="text-center">{{averageTime.techDateTime}}</td>
+                                    </tr>
+                                    </tbody>
+                               </table>
+                                <table ng-if="selectBoxChoice === 3" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Technologist Name
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'avgdistance_name'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-avgdistance_name'"></span>
+                                                </div>
+                                            </th>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Distance Covered (in miles)
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'avgdistance_distance'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-avgdistance_distance'"></span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                     </thead>
+                                    <tr ng-repeat="averageDistance in filteredAverageDistance">
+                                        <td class="text-center">{{averageDistance.techName}}</td>
+                                        <td class="text-center">{{averageDistance.miles}}</td>
+                                    </tr>
+                                </table>
+                                <table ng-if="selectBoxChoice === 4" class="table">
+                                    <thead>
+                                        <tr>
+                                             <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Modality Name
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'modality_name'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-modality_name'"></span>
+                                                </div>
+                                            </th>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Technologist Name
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'modality_name'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-modality_name'"></span>
+                                                </div>
+                                            </th>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    No. of calls completed
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'modality_calls'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-modality_calls'"></span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                     <tr ng-repeat="modality in filteredModality | limitTo:5">
+                                        <td class="text-center">{{modality.modalityName}}</td>
+                                        <td class="text-center">{{modality.technologistName}}</td>
+                                        <td class="text-center">{{modality.noOfFinalised}}</td>
+                                    </tr>
+                                </table>
+                                <table ng-if="selectBoxChoice === 5"  class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Technologist Name
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'threehour_name'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-threehour_name'"></span>
+                                                </div>
+                                            </th>
+                                            <th style="cursor: pointer">
+                                                <div class="th text-center">
+                                                    Time (in minutes)
+                                                    <span class="fa fa-angle-up" data-ng-show="row === 'threehour_time'"></span>
+                                                    <span class="fa fa-angle-down" data-ng-show="row === '-threehour_time'"></span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="threeHourcalls in filteredThreeHourcalls">
+                                        <td class="text-center">{{threeHourcalls.technologistName}}</td>
+                                        <td class="text-center">{{threeHourcalls.timeTaken}}</td>
+                                    </tr>
+                                </table> 
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

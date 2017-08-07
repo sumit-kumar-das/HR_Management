@@ -1,0 +1,364 @@
+<span us-spinner="{radius:15, width:5, length: 10}" spinner-on="showSpinner"></span>
+<form name="userForm" novalidate role="form">    
+    <div ng-show="currentTabMain">
+        <div class="page page-grid">
+            <div class="panel panel-default table-dynamic">
+                <div class="panel-heading"><strong>User</strong> 
+                    <span class="pull-right">
+                        <a ng-click="onClickAdd()" class="headerlink icon_color">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span data-i18n="Add User"></span> 
+                        </a>
+                    </span> 
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-9 col-md-9 col-lg-9 page-num-info">
+                            <span class="footer_color">
+                                Show
+                                <select ng-model="numPerPage"
+                                    ng-options="num for num in numPerPageOpt"
+                                    ng-change="onNumPerPageChange()"
+                                    class="input-sm dropdown_background">
+                                </select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class=" inner-addon right-addon">
+                                <i class="glyphicon glyphicon-search"></i>
+                                <input type="text"
+                                    placeholder="Search..."
+                                    class="form-control input-sm"
+                                    ng-model="searchKeywords"
+                                    ng-keyup="search()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive topmargin wrap">
+                        <div class="">
+                             <table class="table table-bordered table-height">
+                                <thead>
+                                    <tr class="header-color">
+                                        <th class="custom-column-width" data-ng-click="order(ascendingOrder ? 'firstName' : '-firstName')" style="cursor: pointer">
+                                            <div class="th">
+                                                Name
+                                                <span class="fa fa-angle-up" data-ng-show="row === 'firstName'"></span>
+                                                <span class="fa fa-angle-down" data-ng-show="row === '-firstName'"></span>
+                                            </div>
+                                        </th>
+                                         <th class="custom-column-width" data-ng-click="order(ascendingOrder ? 'dob' : '-dob')" style="cursor: pointer">
+                                            <div class="th">
+                                                DOB
+                                                <span class="fa fa-angle-up" data-ng-show="row === 'dob'"></span>
+                                                <span class="fa fa-angle-down" data-ng-show="row === '-dob'"></span>
+                                            </div>
+                                        </th>
+                                         <th class="custom-column-width" data-ng-click="order(ascendingOrder ? 'addressLine1' : '-addressLine1')" style="cursor: pointer">
+                                            <div class="th">
+                                                Address
+                                                <span class="fa fa-angle-up" data-ng-show="row === 'addressLine1'"></span>
+                                                <span class="fa fa-angle-down" data-ng-show="row === '-addressLine1'"></span>
+                                            </div>
+                                        </th>
+                                         <th class="custom-column-width" data-ng-click="order(ascendingOrder ? 'phone1' : '-phone1')" style="cursor: pointer">
+                                            <div class="th">
+                                                Phone No.
+                                                <span class="fa fa-angle-up" data-ng-show="row === 'phone1'"></span>
+                                                <span class="fa fa-angle-down" data-ng-show="row === '-phone1'"></span>
+                                            </div>
+                                        </th>
+                                        <th class="custom-column-width" data-ng-click="order(ascendingOrder ? 'faxNumber' : '-faxNumber')" style="cursor: pointer">
+                                            <div class="th">
+                                                Fax No.
+                                                <span class="fa fa-angle-up" data-ng-show="row === 'faxNumber'"></span>
+                                                <span class="fa fa-angle-down" data-ng-show="row === '-faxNumber'"></span>
+                                            </div>
+                                        </th>
+                                        <th class="custom-column-width">
+                                            <div class="th">
+                                                Action
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr ng-repeat="user in currentPageUsers">
+                                            <td class="custom-column-width">{{user.firstName + " "}}{{user.lastName}}</td>
+                                            <td class="custom-column-width">{{user.dob | date:format}}</td>
+                                            <td class="custom-column-width">{{user.addressLine1 + ", "}}{{user.city + ", "}}{{user.stateName + " "}}{{user.zipCode | mask:"99999-9999"}}</td>
+                                            <td class="custom-column-width">{{user.phone1 | mask:"(999)-999-9999"}}</td>
+                                            <td class="custom-column-width">{{user.faxNumber}}</td>
+                                            <td class="custom-column-width">
+                                                <a class="icon_color" title="view"  ng-click="onClickView(user,$index)"  > <span class="glyphicon glyphicon-eye-open"></span> </a>
+                                                <a class="icon_color" title="edit"  ng-click="onClickEdit(user,$index)"  > <span class="glyphicon glyphicon-pencil"></span></a>
+                                                <a class="icon_color" title="delete"  zc-Confirm-Click ng-click="deleteUser(user,$index)" > <span class="glyphicon glyphicon-trash"></span> </a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredUsers.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    previous-text="&lsaquo;" next-text="&rsaquo;"
+                                    boundary-links="true">
+                                </pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="currentTabMain">
+        <div class="page">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>  User management</strong>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <h4 > <strong> &nbsp; Primary Details </strong></h4>
+                            <hr/>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label class="col-md-4 control-label">First Name*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.primary_firstname.$invalid && userForm.primary_firstname.$dirty || formValidStatus && userForm.primary_firstname.$invalid }" >
+                                        <input tabindex="1" type="text" class="form-control input-sm" name="primary_firstname" ng-model="user.firstName" placeholder="Enter firstname"  required="" ui-placeholder ng-readonly="readStatus" zc-capitalize-first-letter autofocus >
+                                        <p class="help-block" ng-show="userForm.primary_firstname.$error.required && userForm.primary_firstname.$dirty" >Firstname {{message.REQUIRED}}</p>
+                                     <!--   <p class="help-block" ng-show="userForm.primary_firstname.$error.pattern" >Firstname {{message.TEXT}}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label class="col-md-4 control-label">Middle Name</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.primary_middlename.$invalid && userForm.primary_middlename.$dirty  }" >
+                                        <input tabindex="2" type="text" class="form-control input-sm" name="primary_middlename" ng-model="user.middleName"  placeholder="Enter middlename" ng-readonly="readStatus" zc-capitalize-first-letter autofocus>
+                                        <p class="help-block" ng-show="userForm.primary_middlename.$error.required && userForm.primary_middlename.$dirty" >Middlename {{message.REQUIRED}}</p>
+                                        <p class="help-block" ng-show="userForm.primary_middlename.$error.pattern" >Middlename {{message.TEXT}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label class="col-md-4 control-label">Last Name*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.primary_lastname.$invalid && userForm.primary_lastname.$dirty || formValidStatus && userForm.primary_lastname.$invalid }" >
+                                        <input tabindex="3" type="text" class="form-control input-sm" name="primary_lastname" ng-model="user.lastName"  placeholder="Enter lastname" required="" ui-placeholder ng-readonly="readStatus" zc-capitalize-first-letter>
+                                        <p class="help-block" ng-show="userForm.primary_lastname.$error.required && userForm.primary_lastname.$dirty" >Lastname {{message.REQUIRED}}</p>
+                                       <!-- <p class="help-block" ng-show="userForm.primary_lastname.$error.pattern" >Lastname {{message.TEXT}}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">Date of Birth*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.primary_dob.$invalid && userForm.primary_dob.$dirty || formValidStatus && userForm.primary_dob.$invalid }" >
+                                        <input tabindex="4"
+                                               type="text" 
+                                               class="form-control input-sm"
+                                               ng-model="user.dob" 
+                                               data-date-format="M-d-yyyy" 
+                                               data-date-type="number" 
+                                               data-min-date="01/01/1900" 
+                                               data-max-date="today" 
+                                               data-autoclose="1" 
+                                               name="primary_dob" 
+                                               placeholder="Enter date of birth"
+                                               required=""
+                                               ng-readonly="readStatus"
+                                               bs-datepicker>
+                                        <p class="help-block" ng-show="userForm.primary_dob.$error.required && userForm.primary_dob.$dirty" >Date of birth {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Role Type*</label>
+                                    <div class="dropdown col-md-8" ng-class="{ 'has-error' : userForm.primary_role_type.$invalid && userForm.primary_role_type.$dirty || formValidStatus && userForm.primary_role_type.$invalid }" >
+                                        <select tabindex="5" class="form-control input-sm"  name="primary_role_type" ng-disabled="page !== 'Add'" ng-model="user.roleType" required="" ng-options="value.roleType as value.roleName for value in constant.ROLE">
+                                            <option value="">---Please select---</option> <!-- not selected / blank option -->
+                                        </select>
+                                        <p class="help-block" ng-show="userForm.primary_role_type.$error.required && userForm.primary_role_type.$dirty" >Role type {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6" ng-if="user.roleType === 3">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Facility*</label>
+                                    <div class="dropdown col-md-8" ng-class="{ 'has-error' : userForm.facility.$invalid && userForm.facility.$dirty || formValidStatus && userForm.facility.$invalid}" >
+                                        <select tabindex="6" class="form-control input-sm"  name="facility" ng-disabled="page !== 'Add'" ng-model="user.facilityId" ng-options="value.facilityId as value.facilityName for value in facilityList | orderBy:'facilityName'" required="">
+                                            <option value="">---Please select---</option> 
+                                        </select>
+                                        <p class="help-block" ng-show="userForm.facility.$error.required && userForm.facility.$dirty" >Facility {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4 > <strong> &nbsp; Contact Details </strong></h4>
+                            <hr/>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Address Line1*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_address_line1.$invalid && userForm.contact_address_line1.$dirty || formValidStatus && userForm.contact_address_line1.$invalid }" >
+                                        <input tabindex="8" type="text" class="form-control input-sm" name="contact_address_line1" placeholder="Enter address line1" ng-model="user.addressLine1" required="" ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_address_line1.$error.required && userForm.contact_address_line1.$dirty" >Address line1 {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Address Line2</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_address_line2.$invalid && userForm.contact_address_line2.$dirty  }" >
+                                        <input tabindex="9" type="text" class="form-control input-sm" name="contact_address_line2" placeholder="Enter address line2" ng-model="user.addressLine2" ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_address_line2.$error.required && userForm.contact_address_line2.$dirty" >Address line2 {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label  class="col-md-4 control-label">City*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_city.$invalid && userForm.contact_city.$dirty || formValidStatus && userForm.contact_city.$invalid }" >
+                                        <input tabindex="10" type="text" class="form-control input-sm" name="contact_city" placeholder="Enter city"  required="" ng-model="user.city" ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_city.$error.required && userForm.contact_city.$dirty" >City {{message.REQUIRED}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_city.$error.pattern" >City {{message.TEXT}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label class="col-md-4 control-label">Zip Code*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_zip_code.$invalid && userForm.contact_zip_code.$dirty || formValidStatus && userForm.contact_zip_code.$invalid }" >
+                                        <input tabindex="11" name="contact_zip_code" type="text"  class="form-control input-sm" placeholder="Enter zip code"   required="" zc-check-zip ng-model="user.zipCode" ng-readonly="readStatus" >
+                                        <p class="help-block" ng-show="userForm.contact_zip_code.$error.required && userForm.contact_zip_code.$dirty" >Zip code {{message.REQUIRED}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_zip_code.$error.pattern" >Zip code {{message.NUMBER}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Country*</label>
+                                    <div class="dropdown col-md-8" ng-class="{ 'has-error' : userForm.contact_country.$invalid && userForm.contact_country.$dirty || formValidStatus && userForm.contact_country.$invalid }" >
+                                        <select tabindex="12" class="form-control input-sm"  name="contact_country"  required="" ng-model="user.countryId" ng-options="country.country_id as country.country_name for country in countries" ng-disabled="readStatus" ng-change="GetStates()">
+                                            <option value="">---Please select---</option> <!-- not selected / blank option -->
+                                        </select>
+                                        <p class="help-block" ng-show="userForm.contact_country.$error.required && userForm.contact_country.$dirty" >Country {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">State/Province*</label>
+                                    <div class="dropdown col-md-8" ng-class="{ 'has-error' : userForm.contact_state_province.$invalid && userForm.contact_state_province.$dirty || formValidStatus && userForm.contact_state_province.$invalid }" >
+                                        <select tabindex="13" class="form-control input-sm"  name="contact_state_province" ng-model="user.stateId" required="" ng-disabled="readStatus" ng-options="state.state_id as state.state_name for state in states" ng-change="user.stateName=(states|filter:{state_id:user.stateId})[0].state_name">
+                                            <option value="">---Please select---</option> <!-- not selected / blank option -->
+<!--                                             <option ng-repeat="state in states">{{state.state_name}}</option>-->
+                                        </select>
+                                        <p class="help-block" ng-show="userForm.contact_state_province.$error.required && userForm.contact_state_province.$dirty" >State/province {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Phone No.1*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_land_line.$invalid && userForm.contact_land_line.$dirty || formValidStatus && userForm.contact_land_line.$invalid }" >
+                                        <input tabindex="14" type="text" class="form-control input-sm" name="contact_land_line" placeholder="Enter phone number1" required="" ng-model="user.phone1"  ui-mask="(999)-999-9999" ui-mask-placeholder ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_land_line.$error.pattern" >Phone number1 {{message.NUMBER}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_land_line.$error.required && userForm.contact_land_line.$dirty" >Phone number1 {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Extension*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_extension.$invalid && userForm.contact_extension.$dirty || formValidStatus && userForm.contact_extension.$invalid }" >
+                                        <input tabindex="15" type="text" class="form-control input-sm" name="contact_extension" placeholder="Enter phone extension" required="" ng-model="user.extension" ng-pattern="/^[0-9]*$/" ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_extension.$error.pattern" >Extension {{message.NUMBER}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_extension.$error.required && userForm.contact_extension.$dirty" >Extension {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Phone No.2*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_land_line1.$invalid && userForm.contact_land_line1.$dirty || formValidStatus && userForm.contact_land_line1.$invalid }" >
+                                        <input tabindex="16" type="text" class="form-control input-sm" name="contact_land_line1" placeholder="Enter phone number2" ng-model="user.phone2" required=""  ui-mask="(999)-999-9999" ui-mask-placeholder ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_land_line1.$error.pattern" >Phone number2 {{message.NUMBER}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_land_line1.$error.required && userForm.contact_land_line1.$dirty" >Phone number2 {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Fax No.*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_fax_number.$invalid && userForm.contact_fax_number.$dirty || formValidStatus && userForm.contact_fax_number.$invalid }" >
+                                        <input tabindex="17" type="text" class="form-control input-sm" name="contact_fax_number" placeholder="Enter fax number"  required="" ng-model="user.faxNumber"  ui-mask="(999)-999-9999" ui-mask-placeholder ng-readonly="readStatus">
+                                        <p class="help-block" ng-show="userForm.contact_fax_number.$error.pattern" >Fax number {{message.NUMBER}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_fax_number.$error.required && userForm.contact_fax_number.$dirty" >Fax number {{message.REQUIRED}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <label   class="col-md-4 control-label">Email ID*</label>
+                                    <div class="col-md-8" ng-class="{ 'has-error' : userForm.contact_email_id.$invalid && userForm.contact_email_id.$dirty || formValidStatus && userForm.contact_email_id.$invalid || existEmail}" >
+                                        <input tabindex="18" type="email" class="form-control input-sm" name="contact_email_id" placeholder="Enter email address"  required="" ng-model="user.emailId" ng-readonly="readStatus" ng-blur="blurEmail();" ng-change='existEmail=false'>
+                                        <p class="help-block" ng-show="userForm.contact_email_id.$error.required && userForm.contact_email_id.$dirty" >Email id {{message.REQUIRED}}</p>
+                                        <p class="help-block" ng-show="userForm.contact_email_id.$error.email" >Invalid email address</p>
+                                        <p class="help-block" ng-show="existEmail">Email id is already exists</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h4 > <strong> &nbsp; Profile Picture </strong></h4>
+                            <hr/>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group" >
+                                    <!--<label class="col-md-4 control-label">Profile Picture*</label>-->
+                                    <div class="col-md-8">
+                                        <button tabindex="6"
+                                                type="file"
+                                                id="profilePic"
+                                                ngf-select 
+                                                ng-model="file"
+                                                ngf-accept="'image/*'"
+                                                ngf-dimensions="$width > 10 || $height > 10"
+                                                ngf-max-size="2MB"
+                                                ngf-model-invalid="errorFile"
+                                                class="btn btn-primary"
+                                                name="file"
+                                                ng-readonly="readStatus"
+                                                ng-disabled="readStatus"> Upload Profile Picture
+                                        </button>
+                                        <img ng-show="userForm.file.$valid"  ngf-src="file || imagePath" class="thumb" width="60" height="60" ngf-resize="{quality: 0.9}">
+                                        <p ng-show="userForm.file.$error.maxSize" ng-class="{ 'error_msg' : userForm.file.maxSize }" >File is too large - {{errorFile.size / 1000000|number:1}} MB : Max file size - 2MB</p>
+                                        <!--<p class="help-block" ng-show="userForm.file.$error.required && userForm.file.$dirty && formAddStatus" >File {{message.REQUIRED}}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="text-right">
+                            <a class="btn btn-w-md btn-gap-v btn-round btn-danger pointer-margin" ng-click="onClickList()" ng-hide="readStatus">
+                                <span class="glyphicon glyphicon-remove"></span> &nbsp; Cancel</a>
+                            <button  class="btn btn-w-md btn-gap-v btn-round btn-success" ng-disabled="disableButton" ng-click="Submit(userForm.$valid)"  ng-hide="readStatus"><span class="glyphicon glyphicon-ok"></span> &nbsp; Submit </button>
+                            <a class="btn btn-w-md btn-gap-v btn-round btn-info pointer" ng-click="onClickList()" ng-show="readStatus"><span class="glyphicon glyphicon-arrow-left"></span> &nbsp; Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

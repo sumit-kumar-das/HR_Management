@@ -1,0 +1,87 @@
+<div class="page-signin">
+    <form name="forgotPinForm" novalidate>
+        <div class="form-horizontal"> 
+            <div class="signin-header">
+                <section class="logo text-center">
+                    <h1> <a>Reset PIN</a></h1>
+                </section>
+            </div>
+            <div class="signin-body">
+                <div class="container">
+                    <div class="form-container">
+                        <fieldset>
+                            <div class="form-group" >
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-key"></span>
+                                    </span>
+                                    <div  ng-class="{ 'has-error' : forgotPinForm.received_pin.$invalid && forgotPinForm.received_pin.$dirty }" >
+                                        <input type="password" name="received_pin" required=""
+                                            class="form-control input-lg edit-tooltip"
+                                            placeholder="Enter received pin"
+                                            id="oldpin"
+                                            ng-model="forgotPin.oldPin"
+                                            ng-pattern="/^(0*[1-9]+0*)+$/" 
+                                            ng-minlength="4" 
+                                            maxlength="4"/>
+<!--                                            tooltip="{{forgotPinForm.received_pin.$invalid ? 'Incorrect received pin' : ''}}" 
+                                            tooltip-placement="top"
+                                            tooltip-is-open="true"
+                                            tooltip-trigger="focus"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <div class="input-group"> 
+                                    <span class="input-group-addon">
+                                        <span class="ti-key"></span>
+                                    </span>
+                                    <div  ng-class="{ 'has-error' : forgotPinForm.new_pin.$invalid && forgotPinForm.new_pin.$dirty  }" >
+                                        <input type="password" name="new_pin" required=""
+                                            class="form-control input-lg edit-tooltip"
+                                            placeholder="Enter new pin"
+                                            id="pin1"
+                                            ng-model="forgotPin.newPin"
+                                            ng-pattern="/^(0*[1-9]+0*)+$/" 
+                                            ng-minlength="4" 
+                                            maxlength="4" />
+<!--                                            tooltip="{{forgotPinForm.new_pin.$invalid ? 'Pin should be set of 4 numbers and all can not be 0' : ''}}" 
+                                            tooltip-placement="top"
+                                            tooltip-is-open="true"
+                                            tooltip-trigger="focus"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-key"></span>
+                                    </span>
+                                    <div  ng-class="{ 'has-error' : forgotPinForm.confirm_pin.$invalid && forgotPinForm.confirm_pin.$dirty}" >
+                                        <input  type="password" name="confirm_pin"  required=""
+                                            class="form-control input-lg edit-tooltip"  
+                                            placeholder="Enter same pin" 
+                                            id="cpin"
+                                            ng-model="confirm_pin"
+                                            ng-pattern="/^(0*[1-9]+0*)+$/" 
+                                            ng-minlength="4" 
+                                            maxlength="4" 
+                                            pw-check="pin1"/>
+<!--                                            tooltip="{{forgotPinForm.confirm_pin.$error.pwmatch ? 'Pin do not match.' : ''}}" 
+                                            tooltip-placement="top"
+                                            tooltip-is-open="true"
+                                            tooltip-trigger="focus"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider divider-lg"></div>
+                            <div class="form-group">
+                                <button ng-click="Submit(forgotPinForm.$valid)" ng-disabled="!forgotPinForm.$valid" class="btn btn-primary btn-lg btn-block text-center">Reset PIN</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

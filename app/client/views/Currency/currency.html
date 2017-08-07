@@ -1,0 +1,74 @@
+<br> <div class="page page-grid">
+    <div class="panel panel-info contextual-example-panel bootstrap-panel">
+        <div class="panel-heading">
+           <i class="fa fa-list-alt" aria-hidden="true"></i> Currency Details
+            <span class="pull-right" style="margin-top: -4px !important;">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="addCurrency()" style="background: #1b867b !important;"><i class="fa fa-plus" aria-hidden="true"></i> Add Currency</button>
+            </span> 
+        </div>
+        <div class="panel-body">
+            <!-- Panel Body -->
+            <center><span  ng-If="pageLoader"><img style="" src="/images/loader/loader-green.gif" height="42" width="42"></span></center>
+            <div ng-if="editCurrencyFlag">
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">Code</label>
+                        <input type="text" class="form-control" id="inputFirstName" ng-model="inputParams.Code" placeholder="Code">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Currency Name</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Name" placeholder="Currency Name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Status</label>
+                        <select  class="form-control input-sm" ng-options="item.name  for item in statusTypesList track by item.id" ng-model="inputParams.IsActive">
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <center>
+            <div class="row center-block">
+                <button type="button" class="btn btn-primary btn-sm" ng-If="updateCurrencyFlag" ng-click="updateCurrencyDetails(upadateParams.CurrencyId)">Update</button>
+                <button type="submit" class="btn btn-primary btn-sm" ng-If="!updateCurrencyFlag" ng-click="saveCurrencyDetails()">Save</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="cancelCurrencyForm()">Cancel</button>
+            </div>
+            </center>   
+            </div>
+            <div ng-if="!editCurrencyFlag">
+            <table datatable="ng" class="row-border hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Code</th>
+                        <th>Currency Name</th>
+                        <th>Status</th>
+                        <th>Action</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="currency in currencyDetails">
+                        <td>{{$index+1}}</td>
+                        <td>{{currency.code}}</td>
+                        <td>{{currency.name}}</td>
+                        <td><label ng-If="currency.Status=='Active'" class="label label-success">{{currency.Status}}</label><label ng-If="currency.Status=='DeActive'" class="label label-danger">{{currency.Status}}</label></td>
+                        <td>
+			<center>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-primary" title="Edit" ng-click="editCurrencyDetails(currency)"><span class="glyphicon glyphicon-edit"></span></a>
+			    <a href="javascript:;" class="btn-icon btn-icon-sm btn-danger" title="Delete" ng-click="deleteCurrency(currency.cId)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-warning" title="Change Status" ng-click="changeStatus(currency.cId,currency.Status)"><span class="glyphicon glyphicon-signal"></span></a>
+                        </center>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div> 

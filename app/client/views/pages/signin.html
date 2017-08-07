@@ -1,0 +1,56 @@
+<div class="page-signin">
+    <form class="form-horizontal" name="loginForm">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}
+        </alert>
+        <div class="signin-header">
+            <section class="logo text-center">
+                <h1> <a ui-sref="signin" style="pointer-events: none;">HR Management</a></h1>
+            </section>
+        </div>
+        <div class="signin-body" >
+            <div class="container">
+                <div class="form-container" style="width: 540px;
+    margin: 0 auto;
+    border-radius: 5px;
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    padding: 32px;">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="input-group input-group-first">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                                <input type="text" name="username" required=""
+                                    class="form-control input-lg"
+                                    placeholder="Username"
+                                    ng-model="user.username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <span class="ti-lock"></span>
+                                </span>
+                                <input type="password" name="password" required=""
+                                    class="form-control input-lg"
+                                    placeholder="Enter password"
+                                    ng-model="user.password">
+                            </div>
+                        </div>
+                        <div class="divider divider-lg"></div>
+                        <div class="form-group">
+                            <button ng-disabled="loginForm.$invalid"  ng-click="Login(loginForm.$valid)" class="btn btn-primary btn-lg btn-block text-center">Log in</button>
+                        </div>
+                    </fieldset>
+                    <div class="divider"></div>
+                    <section>
+                        <p class="text-right " ng-hide="activateFlag">
+                            <a ui-sref="forgotCredentials" class="textcolor">Forgot Password?</a>
+                        </p>
+                    </section>               
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

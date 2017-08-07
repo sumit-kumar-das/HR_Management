@@ -1,0 +1,155 @@
+<br>
+<div class="page page-grid">
+    <div class="panel panel-info contextual-example-panel bootstrap-panel">
+        <div class="panel-heading">
+            <i class="fa fa-building" aria-hidden="true"></i> Company Details
+            <div class="pull-right" style="margin-top: -4px !important;">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="editCompany()" style="background: #1b867b !important;"><i class="fa fa-plus" aria-hidden="true"></i> Add Company</button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <!-- Panel Body -->
+            <center><span  ng-If="pageLoader"><img style="" src="/images/loader/loader-green.gif" height="42" width="42"></span></center>
+            <div ng-If="!editflag">
+            <table datatable="ng" class="row-border hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Slogan</th>
+                        <th>Location</th>
+                        <th>PAN No.</th>
+                        <th>TAN No.</th>
+                        <th>ESI No.</th>
+                        <th>PF No.</th>
+                        <th>GSTN</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="company in companyDetails">
+                        <td>{{company.CompName}}</td>
+                        <td>{{company.Slogan}}</td>
+                        <td>{{company.adddress}}</td>
+                        <td>{{company.PAN}}</td>
+                        <td>{{company.TANNo}}</td>
+                        <td>{{company.ESI}}</td>
+                        <td>{{company.PFNo}}</td>
+                        <td>{{company.GSTN}}</td>
+                        <td>{{company.IsActive}}</td>
+                        <td>
+			<center>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-primary" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+			    <a href="javascript:;" class="btn-icon btn-icon-sm btn-danger" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-warning" title="Change Status"><span class="glyphicon glyphicon-signal"></span></a>
+                        </center>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            </div>
+            <div ng-if="editflag">
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">Code</label>
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Code">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Name</label>
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Company Name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Location</label>
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Location">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Company Logo</label>
+                        <button class="form-control" tabindex="6"
+                                                type="file"
+                                                id="companyLogo"
+                                                ngf-select 
+                                                ng-model="inputParams.file"
+                                                ngf-accept="'image/*'"
+                                                ngf-dimensions="$width > 10 || $height > 10"
+                                                ngf-max-size="2MB"
+                                                ngf-model-invalid="errorFile"
+                                                class="btn btn-primary"
+                                                name="file"
+                                                ng-readonly="readStatus"
+                                                ng-disabled="readStatus"> Upload company logo
+                        </button><br>
+                        <img ng-show="userForm.file.$valid"  ngf-src="inputParams.file || imagePath" class="thumb" width="60" height="60" ngf-resize="{quality: 0.9}">
+                        <p ng-show="userForm.file.$error.maxSize" ng-class="{ 'error_msg' : userForm.file.maxSize }" >File is too large - {{errorFile.size / 1000000|number:1}} MB : Max file size - 2MB</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Status</label>
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Status">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">PAN Number</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="PAN Number">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">TAN Number</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="TAN Number">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">ESI Number</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="ESI Number">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">PF Number</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="PF Number">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">Certificate Number</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="Certificate Number">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite">CIN</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="CIN">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">LIN</label>
+                        <input type="text" class="form-control" id="inputWebsite" placeholder="LIN" >
+                    </div>
+                </div>
+            </div>
+            <center>
+            <div class="row center-block">
+                <button type="submit" class="btn btn-primary btn-sm" ng-click="">Save</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="cancelEditCompany()">Cancel</button>
+            </div>
+            </center>   
+            </div>
+
+        </div>
+    </div>
+</div> 

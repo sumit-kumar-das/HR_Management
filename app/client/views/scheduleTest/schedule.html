@@ -1,0 +1,149 @@
+<br> <div class="page page-grid">
+    <div class="panel panel-info contextual-example-panel bootstrap-panel">
+        <div class="panel-heading">
+           <i class="fa fa-list-alt" aria-hidden="true"></i> Site Details
+            <span class="pull-right" style="margin-top: -4px !important;">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="addSites()" style="background: #1b867b !important;"><i class="fa fa-plus" aria-hidden="true"></i> Add Site</button>
+            </span> 
+        </div>
+        <div class="panel-body">
+		<center><span  ng-If="pageLoader"><img style="" src="/images/loader/loader-green.gif" height="42" width="42"></span></center>
+            <!-- Panel Body -->
+              <div ng-if="editSiteFlag">
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Site Name</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Home" placeholder="Site Name">
+                    </div>
+                </div>
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">Cell</label>
+                        <input type="text" class="form-control" id="inputWebsite" ng-model="inputParams.Cell" placeholder="Cell">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Address_1" placeholder="Address Line 1">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Address_2" placeholder="Address Line 2">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Country</label>
+                        <select class="form-control input-sm" ng-model="inputParams.Country"  name="countryName" ng-options="value.countryCode as value.countryName  for value in countryList| orderBy: 'countryName'" tabindex="4">
+                              <option value="">---Please Select Country---</option>           
+                        </select>
+                        
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">State</label>
+                        <select class="form-control input-sm" ng-model="inputParams.State"  name="stateName" ng-options="value.stateCode as value.stateName  for value in stateList| orderBy: 'stateName'" tabindex="5">
+                               <option value="">---Please Select State---</option>             
+                        </select>
+                    </div>
+                </div>
+		<div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">District</label>
+                         <select class="form-control input-sm" ng-model="inputParams.District"  name="districtName" ng-options="value.distCode as value.distName  for value in districtList| orderBy: 'distName'" tabindex="6">
+                                 <option value="">---Please Select District---</option>           
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">City</label>
+                        <select class="form-control input-sm" ng-model="inputParams.City"  name="cityName" ng-options="value.cityCode as value.cityName  for value in cityList| orderBy: 'cityName'" tabindex="4">
+                               <option value="">---Please Select City---</option>             
+                        </select>
+                    </div>
+                </div>
+                <!--<div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">ZIP Code</label>
+                        <input type="text" class="form-control" id="inputWebsite" ng-model="inputParams.ZipCode" placeholder="ZIP Code">
+                    </div>
+                </div>-->
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">Mobile Number</label>
+                        <input type="text" class="form-control" id="inputWebsite" ng-model="inputParams.Mobile" placeholder="Mobile Number">
+                    </div>
+                </div>
+				<div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite" class="control-label">Email</label>
+                        <input type="text" class="form-control" id="inputWebsite" ng-model="inputParams.Email" placeholder="Email ID">
+                    </div>
+                </div>
+                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputWebsite">Status</label>
+                        <select class="form-control input-sm" ng-model="inputParams.IsActive"  name="statusName" ng-options="value.statusName  for value in statusTypesList| orderBy: 'statusName'" tabindex="4">
+                                            
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+            <center>
+            <div class="row center-block">
+                <button type="button" class="btn btn-primary btn-sm" ng-If="updateSiteFlag" ng-click="updateSiteDetails(updateParams.SiteId)">Update</button>
+                <button type="submit" class="btn btn-primary btn-sm" ng-If="!updateSiteFlag" ng-click="saveSiteDetails()">Save</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="cancelSiteForm()">Cancel</button>
+            </div>
+            </center>   
+            </div>
+            <div ng-if="!editSiteFlag">
+            <table datatable="ng" class="row-border hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Site Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Cell</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+				
+                    <tr ng-repeat="site in siteDetails">
+                        <td>{{$index+1}}</td>
+                        <td>{{site.Home}}</td>
+                        <td>{{site.Address_1}}</td>
+                        <td>{{site.Email}}</td>
+                        <td>{{site.Mobile}}</td>
+                        <td>{{site.Cell}}</td>
+                        <td><label ng-If="site.Status=='Active'" class="label label-success">{{site.Status}}</label><label ng-If="site.Status=='DeActive'" class="label label-danger">{{site.Status}}</label></td>
+                        <td>
+                        <center>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-primary" title="Edit" ng-click="editSiteDetails(site)"><span class="glyphicon glyphicon-edit"></span></a>
+			    <a href="javascript:;" class="btn-icon btn-icon-sm btn-danger" title="Delete" ng-click="deleteSite(site.SiteId)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-warning" title="Change Status" ng-click="changeStatus(site.SiteId,site.Status)"><span class="glyphicon glyphicon-signal"></span></a>
+                        </center>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div> 

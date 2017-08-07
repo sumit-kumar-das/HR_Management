@@ -1,0 +1,277 @@
+<div>
+
+    <div class="page page-grid" ng-If="!showTestReport">
+
+        <div class="panel panel-info contextual-example-panel bootstrap-panel">
+            <div class="panel-heading" style="cursor: pointer;" ng-click="onAdvSerchHeading()">
+                <span class="glyphicon glyphicon-list-alt"></span>  Advanced Search
+                <div class="pull-right">
+                    <span class="ti-angle-double-down" style="cursor: pointer;" ng-If="!isActiveAdvance"></span>
+                    <span class="ti-angle-double-up" style="cursor: pointer;" ng-If="isActiveAdvance"></span>
+                </div>
+            </div>
+            <div class="panel-body" ng-If="isActiveAdvance">
+                <!-- Panel Body -->
+
+                <div class="panel-heading">
+                    <strong class="icon_color">
+                        <span class="glyphicon glyphicon-th">
+                        </span> 
+                        Advance Search
+                    </strong> 
+                </div>
+                <div class="">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6">  
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">Asset Group Type *</label>
+                                    <div class="dropdown col-md-8">                                     
+                                        <select class="form-control input-sm" ng-model="inputParams.assetGroupType"  name="assetGroups" ng-options="value._id.$oid as value.assetTypeGroup  for value in assetGroupTypeList| orderBy: 'assetTypeGroup'" ng-change="getAssetsGroupByGroupTypeId()">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">  
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">Asset Group *</label>
+                                    <div class="dropdown col-md-8">                                     
+                                        <select class="form-control input-sm" ng-model="inputParams.assetGroup"  name="assetGroups" ng-options="value._id.$oid as value.assetgroupcode  for value in assetGroupList| orderBy: 'assetgroupcode'">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">  
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">Asset Type *</label>
+                                    <div class="dropdown col-md-8">                                     
+                                        <select class="form-control input-sm" ng-model="inputParams.assetType"  name="assetTypes" ng-options="value.assetTypeId as value.assetType  for value in assetTypesList| orderBy: 'assetType'" ng-change="getAllAssetsByAssetTypeId()">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">Asset *</label>
+                                    <div class="dropdown col-md-8">                                     
+                                        <select class="form-control input-sm" ng-model="inputParams.asset"  name="assets" ng-options="value.assetTypeId as value.assetCode  for value in assetTypeByIdList| orderBy: 'assetCode'">
+                                            <option value="">---Please select---</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">  
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">From Date</label>
+                                    <div class="dropdown col-md-8">
+                                        <input  tabindex="1" type="text" 
+                                                ng-model="inputParams.startDate"
+                                                placement="bottom"
+                                                class="form-control input-sm"
+                                                data-date-format="M-d-yyyy"
+                                                data-autoclose="1" 
+                                                name="startDate" 
+                                                placeholder="dd/mm/yyyy"
+                                                ng-change="validateDate(inputParams.startDate, inputParams.endDate)"
+                                                ng-readonly="readStatus"
+                                                bs-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">  
+                                <div class="form-group">
+                                    <label  class="col-md-4 control-label">To Date</label>
+                                    <div class="dropdown col-md-8">
+                                        <input tabindex="2" type="text" 
+                                               class="form-control input-sm"
+                                               ng-model="inputParams.endDate"
+                                               placement="bottom"
+                                               data-date-format="M-d-yyyy"
+                                               data-autoclose="1" 
+                                               name="endDate" 
+                                               placeholder="dd/mm/yyyy"
+                                               ng-change="validateDate(inputParams.startDate, inputParams.endDate)"
+                                               ng-readonly="readStatus"
+                                               bs-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button  class="btn btn-w-md btn-gap-v btn-round btn-warning" ng-hide="readStatus" ng-click="ResetParms()"> &nbsp; Reset </button>
+                            <button  class="btn btn-w-md btn-gap-v btn-round btn-success" ng-hide="readStatus" ng-click="GetCustomFilteredTestData()"><span class="glyphicon glyphicon-ok"></span> &nbsp; View </button>
+                        </div>
+                    </div>
+                </div>
+            </div>   </div> 
+
+    </div>
+    <div class="page page-grid" style="margin:0px;" ng-If="!showTestReport">
+        <div class="panel panel-default">                  
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <label>Asset Type Group : </label>
+                    {{inputParams.assetGroupType}}
+                </div>
+                <div class="col-md-4">
+                    <label>Asset Group : </label>
+                    {{inputParams.assetGroup}}
+                </div>
+                <div class="col-md-4">
+                    <label>Asset Type : </label>
+                    {{inputParams.assetType}}
+                </div>
+                <div class="col-md-4">
+                    <label>Asset : </label>
+                    {{inputParams.asset}}
+                </div>
+                <div class="col-md-4">
+                    <label>From Date : </label>
+                    {{inputParams.startDate| date : format : "MM/dd/yyyy"}}
+                </div>
+                <div class="col-md-4">
+                    <label>To Date : </label>
+                    {{inputParams.endDate| date : format : "MM/dd/yyyy"}}
+                </div>
+            </div> 
+        </div> 
+    </div>
+    <div class="page page-grid" ng-If="!showTestReport"> 
+        <span class="fa fa-spinner" ng-If="showSpinner">Please wait..</span>     
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">                  
+                    <div class="panel-body">
+                        <div style="width:100%;" class="gridStyle" ng-grid="gridOptions"></div>
+                    </div>
+                </div>
+            </div>
+            <!--        <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                                    Panel content
+                                 <div class="task-list">
+                                    <ul class="list-inline clearfix">
+                                        <li class="first-item">
+                                            <input type="checkbox"
+                                                   id="toggle-all"
+                                                   ng-model="allChecked"
+                                                   data-ng-change="markAll()">
+                                            <label for="toggle-all">Mark all </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <section  data-ng-cloak >
+                                    <div data-ng-repeat="test in mySelections">
+                                        <div class="well well-sm"><input type="checkbox"
+                                                                         class="toggle-task"
+                                                                         ng-model="selected" ng-click="getSelectionId(test.Id)">
+                                            {{test.AssetType}} , {{test.AssetCode }} , {{test.testName}}</div>
+                                    </div>
+                                </section>
+            
+                                
+                            </div>
+                        </div>
+                    </div>-->
+            <div class="pull-right">
+                <button class="btn btn-success" ng-click="showTest()"><span class="glyphicon glyphicon-open"></span> Show Test</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="page page-dashboard" ng-If="showTestReport">
+        <span class="pull-right">
+            <button class="btn btn-primary  btn-xs" ng-click="openComparisonChart('Analyze Test Data')" title="Analyze test ressult on date.">
+                <span class="glyphicon glyphicon-stats"></span> Analyze Result</button>
+            <button class="btn btn-primary  btn-xs" ng-click="" title="Export test result in excel.">
+                <span class="glyphicon glyphicon-download"></span> Export to excel</button>
+            <button ng-click="goBack()" class="btn btn-primary btn-xs" title="Back to previous menu.">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back To Advance Search</button>
+        </span><br>
+        <div class="row">
+            <div class="col-lg-12" data-ng-repeat="testresult in finalBuild">
+                <section class="panel panel-box">
+                    <div class="panel-top bg-primary" style="padding-top:1px;">
+                        <div class="top">
+                            <div class="pull-right">
+                                <span class="glyphicon glyphicon-info-sign" ng-click="openAssetTemplate(testresult.AssetType, testresult.headerFields)" style="font-size: 23px;cursor:pointer;" title="Click here for header fields."></span>
+                                &nbsp;&nbsp;<span class="glyphicon glyphicon-stats" ng-click="openAssetTemplate(testresult.AssetType, testresult.headerFields)" style="font-size: 23px;cursor:pointer;" title="Graphical representation."></span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>{{testresult.Date}}</h3>
+                            <p>{{testresult.testName}}</p> 
+                        </div>
+                        <div class="pull-left">
+                            Asset Type: {{testresult.AssetType}}
+                        </div>
+                        <div class="pull-right">
+                            Asset Name: {{testresult.Assets}}
+                        </div>
+                    </div>
+                    <div class="list-justified-container">
+                        <div id="grid" ui-grid="{{gridOpt[$index]}}" class="grid"></div>
+<!--                        <div style="border: 1px solid rgb(212,212,212);width:520px; height: 300px;" ng-grid="{{gridOpt[$index]}}" ui-grid-move-columns></div>-->
+                    </div>
+                </section>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="assetInfo.html">
+    <div class="modal-header">
+    <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+    <div class="" ng-repeat="data in iData">
+        
+    </div>
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="compareThroughChart.html">
+    <div class="modal-header">
+    <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div id="chartdiv" ></div>	
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="header_template.html">
+<div class="ui-grid-header custom-ui-grid-header">
+    <div class="ui-grid-top-panel">
+        <div class="ui-grid-header-viewport">
+            <div class="ui-grid-header-canvas" style="width: 100%">
+                <div class="ui-grid-header-cell-wrapper" style="display: block;" ng-style="colContainer.headerCellWrapperStyle()">
+                    <div class="ui-grid-header-cell-row" style="display: block; border-bottom: 1px solid;border-bottom-color: #d4d4d4;">
+                        <div  class="ui-grid-header-cell" ng-repeat="superCol in grid.options.superColDefs track by $index" col-name="{{superCol.name}}">
+                            <div class="ui-grid-cell-contents" data-ng-bind="superCol.displayName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-header-cell-row">
+                        <div class="ui-grid-header-cell ui-grid-clearfix" 
+                        			ng-repeat="col in colContainer.renderedColumns track by col.colDef.name" 
+                        			ui-grid-header-cell col="col" super-col-width-update render-index="$index">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</script>
+
+
+

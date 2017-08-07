@@ -1,0 +1,97 @@
+.dataTables_wrapper { font-size: 15px;}
+
+.scrollStyle
+{
+overflow-x:auto;
+}
+table.dataTable {
+  max-width: none;
+}
+th,td{ white-space:normal; }
+div.container 
+{
+    min-width: 0px;
+    margin: 0 auto;
+}
+table 
+{
+     border-collapse: ollapse;
+     border: 1px solid black;
+}
+
+table.dataTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+ 
+    div.container {
+        width: 80%;
+    }
+    
+div.DTFC_LeftBodyLiner {
+    border-right: 1px solid black;
+    overflow-x: hidden;
+}
+
+.datatable-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.dataTables_processing {
+    position: absolute;
+    top: 350%;
+    left: 50%;
+    width: 250px;
+    height: 50px;
+    margin-left: -125px;
+    margin-top: -15px;
+    padding: 20px 0 20px 0;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    background-color: white;
+    
+   } 
+div.dataTables_processing { z-index: 2; }  
+
+th { border-right: 1px solid black }
+table.dataTable th, table.dataTable td {
+    overflow: hidden;
+}
+body{
+    
+   background:none;
+    background-color:white;
+}
+
+.form-group > div > p{
+    padding:2px;
+    margin-top:3px;
+    
+}
+#container
+{
+ width:75%;
+ margin-left:auto;
+ margin-right:auto;
+}
+
+#container1
+{
+ width:75%;
+ margin-left:auto;
+ margin-right:auto;
+}
+
+#container2
+{
+ width:75%;
+ margin-left:auto;
+ margin-right:auto;
+}

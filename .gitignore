@@ -1,0 +1,7 @@
+app/client/bower_components
+nbproject
+.DS_Store
+npm-debug.log
+/preview/preview.zip
+/documentation/index.html
+.idea

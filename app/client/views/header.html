@@ -1,0 +1,74 @@
+<header class="top-header clearfix">
+    <!-- Logo -->
+    <div class="logo headerpadding">
+        <span style="color:#1b867b;">
+        <i class="fa fa-bolt" aria-hidden="true"></i>   HR
+        </span> Management  
+    </div>
+
+    <!-- needs to be put after logo to make it work -->
+    <div class="menu-button" toggle-off-canvas>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+    <div class="top-nav">
+        <ul class="nav-left list-unstyled">
+            <li>
+                <a href="#/" data-toggle-nav-collapsed-min class="toggle-min"><i class="ti-menu"></i></a>
+            </li>
+        </ul> 
+        <ul class="nav-right list-unstyled nav-padding">
+            <li class="nav-brandname">
+                <a style="cursor: pointer">
+                <span>{{constant.CLIENTNAME}} </span>
+            </a>
+            </li>
+        </ul>
+        <ul class="nav-right pull-right list-unstyled">
+<!--            <li> <span class="glyphicon glyphicon-envelope"></span></li>-->
+<!--            <li class="nav-messageIcon">
+                <a style="cursor: pointer">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                 </a>
+            </li>-->
+
+
+<!--            <li class="nav-messageIcon">
+                <a ui-sref="manageMessage" title="message" class="pointer" style="cursor: pointer">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    <span class="badge badge-danger">4</span>
+                 </a>
+            </li>-->
+
+            <li class="dropdown text-normal nav-profile" dropdown>
+                <a href="javascript:;" dropdown-toggle ng-disabled="disabled">
+                    <span data-i18n="Welcome {{constant.DISPLAYNAME}}"></span>
+                    
+                    <img ng-src="images/default.jpg" alt="" class="img-circle img30_30">
+                </a>
+                <ul class="dropdown-menu with-arrow pull-right">
+                    <li>
+                        <a ui-sref="manageProfile">
+                            <i class="ti-user"></i>
+                            <span data-i18n="My Profile"></span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a ui-sref="manageTenant">
+                            <i class="ti-home"></i>
+                            <span data-i18n="Settings"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="Logout()" ng-show="sessionService.isLoggedIn" style="cursor: pointer">
+                            <i class="ti-export"></i>
+                            <span data-i18n="Sign Out"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</header>

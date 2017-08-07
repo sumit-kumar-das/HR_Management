@@ -1,0 +1,78 @@
+<br> <div class="page page-grid">
+    <div class="panel panel-info contextual-example-panel bootstrap-panel">
+        <div class="panel-heading">
+           <i class="fa fa-list-alt" aria-hidden="true"></i> Designation Details
+            <span class="pull-right" style="margin-top: -4px !important;">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="addDesignation()" style="background: #1b867b !important;"><i class="fa fa-plus" aria-hidden="true"></i> Add Designation</button>
+            </span> 
+        </div>
+        <div class="panel-body">
+            <!-- Panel Body -->
+            <center><span  ng-If="pageLoader"><img style="" src="/images/loader/loader-green.gif" height="42" width="42"></span></center>
+            <div ng-if="editDesignationFlag">
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">Code</label>
+                        <input type="text" class="form-control" id="inputFirstName" ng-model="inputParams.Code" placeholder="Code">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Designation Name</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Name" placeholder="Designation Name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Status</label>
+                        <select class="form-control input-sm"  name="statusName" ng-options="value.statusName  for value in statusTypesList track by value.statusName" ng-model="inputParams.IsActive" tabindex="4">
+                               
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <center>
+            <div class="row center-block">
+                
+                <button type="button" class="btn btn-primary btn-sm" ng-If="updateDesignationFlag" ng-click="updateDesignationDetails(upadateParams.DesignationId)">Update</button>
+                <button type="submit" class="btn btn-primary btn-sm" ng-If="!updateDesignationFlag" ng-click="saveDesignationDetails()">Save</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="cancelDesignationForm()">Cancel</button>
+            </div>
+            </center>   
+            </div>
+            <div ng-if="!editDesignationFlag">
+            <table datatable="ng" class="row-border hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Code</th>
+                        <th>Designation Name</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="designation in designationDetails">
+                        <td>{{$index+1}}</td>
+                        <td>{{designation.Code}}</td>
+                        <td>{{designation.Name}}</td>
+                        <td><label ng-If="designation.DesignationStatus=='Active'" class="label label-success">{{designation.DesignationStatus}}</label><label ng-If="designation.DesignationStatus=='DeActive'" class="label label-danger">{{designation.DesignationStatus}}</label></td>
+                        <td>
+			<center>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-primary" title="Edit" ng-click="editDesignationDetails(designation)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-danger" title="Delete" ng-click="deleteDesignation(designation.DesignationId)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-warning" title="Change Status" ng-click="changeStatus(designation.DesignationId,designation.DesignationStatus)"><span class="glyphicon glyphicon-signal"></span></a>
+                        </center>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div> 

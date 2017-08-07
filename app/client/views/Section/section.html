@@ -1,0 +1,109 @@
+<br> <div class="page page-grid">
+    <div class="panel panel-info contextual-example-panel bootstrap-panel">
+        <div class="panel-heading">
+           <i class="fa fa-list-alt" aria-hidden="true"></i> Contractor Details
+            <span class="pull-right" style="margin-top: -4px !important;">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="addContractors()" style="background: #1b867b !important;"><i class="fa fa-plus" aria-hidden="true"></i> Add Contractor</button>
+            </span> 
+        </div>
+        <div class="panel-body">
+            <!-- Panel Body -->
+            <center><span  ng-If="pageLoader"><img style="" src="/images/loader/loader-green.gif" height="42" width="42"></span></center>
+            <div ng-if="editContractorFlag">
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputFirstName" class="control-label">Code</label>
+                        <input type="text" class="form-control" id="inputFirstName" ng-model="inputParams.Code" placeholder="Code">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Contractor Name</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.Name" placeholder="Contractor Name">
+                    </div>
+                </div>
+		<div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Address</label>
+                        <input type="text" class="form-control" id="inputLastName" ng-model="inputParams.address" placeholder="Address">
+                    </div>
+                </div>
+                    
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">From Date</label>
+                        <input type="text" placeholder="Select From Date (YYYY/MM/DD)" ng-model="inputParams.ContractFromDate"  id="selectDate" class="form-control input-sm"   datepicker-config="customConfig" ng-flat-datepicker  size="100" />
+                    </div>
+                    </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">To Date</label>
+                        <input type="text" placeholder="Select To Date (YYYY/MM/DD)" ng-model="inputParams.ContractTillDate"  id="selectDate" class="form-control input-sm"   datepicker-config="customConfig" ng-flat-datepicker  size="100" />
+                    </div>
+                    </div>
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Notes</label>
+                        <input type="textarea" class="form-control" id="inputLastName" ng-model="inputParams.Notes" placeholder="Notes">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="inputLastName" class="control-label">Status</label>
+                        <select  class="form-control input-sm" ng-options="item.name  for item in statusTypesList track by item.id" ng-model="inputParams.IsActive">
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <center>
+            <div class="row center-block">
+                <button type="button" class="btn btn-primary btn-sm" ng-If="updateContractorFlag" ng-click="updateContractorDetails(upadateParams.ContractorId)">Update</button>
+                <button type="submit" class="btn btn-primary btn-sm" ng-If="!updateContractorFlag" ng-click="saveContractorDetails()">Save</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="cancelContractorForm()">Cancel</button>
+            </div>
+            </center>   
+            </div>
+            <div ng-if="!editContractorFlag">
+            <table datatable="ng" class="row-border hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Code</th>
+                        <th>Contractor Name</th>
+                        <th>Address</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                        <th>Action</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="contractor in contractorDetails">
+                        <td>{{$index+1}}</td>
+                        <td>{{contractor.Code}}</td>
+                        <td>{{contractor.Name}}</td>
+                        <td>{{contractor.Address}}</td>
+                        <td>{{contractor.ContractFrom}}</td>
+                        <td>{{contractor.ContractTill}}</td>
+                        <td>{{contractor.Note}}</td>
+                        <td><label ng-If="contractor.HoliDayStatus=='Active'" class="label label-success">{{contractor.HoliDayStatus}}</label><label ng-If="contractor.HoliDayStatus=='DeActive'" class="label label-danger">{{contractor.HoliDayStatus}}</label></td>
+                        <td>
+			<center>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-primary" title="Edit" ng-click="editContractorDetails(contractor)"><span class="glyphicon glyphicon-edit"></span></a>
+			    <a href="javascript:;" class="btn-icon btn-icon-sm btn-danger" title="Delete" ng-click="deleteContractor(contractor.ContractorId)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="javascript:;" class="btn-icon btn-icon-sm btn-warning" title="Change Status" ng-click="changeStatus(contractor.ContractorId,contractor.HoliDayStatus)"><span class="glyphicon glyphicon-signal"></span></a>
+                        </center>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div> 
